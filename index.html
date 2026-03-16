@@ -1,1 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无聊预测大师</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: '微软雅黑', sans-serif;
+        }
 
+        body {
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        .prediction-box {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #666;
+            border-radius: 10px;
+            margin: 30px 0;
+            padding: 20px;
+        }
+
+        #prediction-text {
+            font-size: 1.8rem;
+            color: #444;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        #refresh-btn {
+            background-color: #4169e1;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #refresh-btn:hover {
+            background-color: #1e90ff;
+            transform: scale(1.05);
+        }
+
+        .counter {
+            margin-top: 20px;
+            color: #888;
+            font-size: 1rem;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤪 无聊预测大师 🤪</h1>
+        
+        <div class="prediction-box">
+            <p id="prediction-text">点击按钮获取你的专属预测！</p>
+        </div>
+
+        <button id="refresh-btn">换一个预测</button>
+        <p class="counter">已为 <span id="count">0</span> 人预测过</p>
+    </div>
+
+    <footer>© 2026 无聊预测局 - 所有预测均为娱乐</footer>
+
+    <script>
+        // 20个无聊的预测内容
+        const predictions = [
+            "你的妈妈比你大",
+            "你每天都需要喝水",
+            "你睡觉的时候会闭上眼睛",
+            "你吃饭需要用嘴",
+            "你的年龄一年比一年大",
+            "你呼吸的是空气",
+            "你穿鞋先穿左脚或右脚",
+            "你玩手机需要用手",
+            "你眨眼的时候眼睛会闭上",
+            "你饿了就想吃东西",
+            "你累了就想休息",
+            "你的头发比你的手指短（或长）",
+            "你走路需要用脚",
+            "你说话需要动嘴巴",
+            "你看屏幕的时候会睁着眼睛",
+            "你打哈欠会张大嘴巴",
+            "你的影子会跟着你",
+            "你笑的时候会露出牙齿（或没有）",
+            "你哭的时候会流眼泪",
+            "你思考的时候大脑在运转"
+        ];
+
+        // 获取DOM元素
+        const predictionText = document.getElementById('prediction-text');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const countSpan = document.getElementById('count');
+
+        // 初始化计数
+        let count = 0;
+        
+        // 随机获取预测的函数
+        function getRandomPrediction() {
+            const randomIndex = Math.floor(Math.random() * predictions.length);
+            return predictions[randomIndex];
+        }
+
+        // 更新预测文本
+        function updatePrediction() {
+            // 添加动画效果
+            predictionText.classList.remove('fade-in');
+            void predictionText.offsetWidth; // 重置动画
+            predictionText.classList.add('fade-in');
+            
+            // 设置随机预测内容
+            predictionText.textContent = getRandomPrediction();
+            
+            // 更新计数
+            count++;
+            countSpan.textContent = count;
+        }
+
+        // 页面加载时显示第一个预测
+        window.onload = updatePrediction;
+
+        // 点击按钮更换预测
+        refreshBtn.addEventListener('click', updatePrediction);
+
+        // 按空格键也能更换预测
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                updatePrediction();
+            }
+        });
+    </script>
+</body>
+</html>
